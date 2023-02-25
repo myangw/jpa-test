@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  jpa-test-db:
+    platform: linux/x86_64
+    container_name: jpa-test-mysqldb
+    image: library/mysql:5.7
+    command:
+      - mysqld
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "33306:3306"
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: 1234
+      TZ: Asia/Seoul
+    volumes:
+      - ./init/mysql:/docker-entrypoint-initdb.d
