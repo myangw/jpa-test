@@ -6,7 +6,7 @@ import javax.persistence.*
 @Entity
 class Apply(
     userId: Long,
-    desiredDates: List<LocalDate>
+    desiredDates: MutableList<LocalDate>
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,12 +14,12 @@ class Apply(
 
     val userId: Long = userId
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "apply_desired_date", joinColumns = [JoinColumn(name = "apply_id")])
-    var desiredDates: List<LocalDate> = desiredDates
+    var desiredDates: MutableList<LocalDate> = desiredDates
         protected set
 
     fun updateDesiredDates(desiredDates: List<LocalDate>) {
-        this.desiredDates = desiredDates
+        this.desiredDates = desiredDates.toMutableList()
     }
 }
